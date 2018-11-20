@@ -1,0 +1,27 @@
+database:
+  driverClass: com.microsoft.sqlserver.jdbc.SQLServerDriver
+  user: ${DATABASE_USER:-}
+  password: ${DATABASE_PW:-}
+  url: ${DATABASE_URL:-}
+  maxWaitForConnection: 3s
+  validationQuery: "SELECT 1"
+  validationQueryTimeout: 3s
+  minSize: 3
+  maxSize: 20
+  checkConnectionWhileIdle: true
+  minIdleTime: 1 minute
+server:
+  adminMinThreads: 1
+  adminMaxThreads: 64
+  applicationConnectors:
+    - type: http
+      port: 18181
+  adminConnectors:
+    - type: http
+      port: 18182
+consumableValue: ichKannVerwendetWerden
+metrics:
+  reporters:
+    - type: console
+      timeZone: UTC
+      output: stdout
