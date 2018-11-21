@@ -1,7 +1,9 @@
 package itech.resources;
 
+import itech.db.DbRequests;
 import itech.helloWorldService.Gender;
 import itech.helloWorldService.HelloWorld;
+import itech.hotfix.Atmospherics;
 import itech.hotfix.Temp;
 
 import org.glassfish.jersey.client.JerseyClient;
@@ -12,17 +14,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 
-@Path("helloWorld")
+@Path("hotFix")
 public class HotFixResource extends JerseyClient {
 
-    @Path("/simpleTextString")
-    @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String helloWorldString() {
-        String helloWorld = HelloWorld.helloWorldString();
-        return helloWorld;
-    }
-    
     @GET
     @Path("/temp")
     @Produces(MediaType.APPLICATION_JSON)
@@ -34,7 +28,9 @@ public class HotFixResource extends JerseyClient {
     @Path("/setTemp")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response setTemp(Temp t) {
+    public Response setTemp(Atmospherics a) {
+    	
+    	DbRequests.insertAtmospheric(a);
     	
     	return null;
     }

@@ -48,7 +48,24 @@ public class ItechDropApp extends Application<ItechDropConf> {
         String dbName = "HHFdb";
         String user = configuration.getDatabase().getUser();
         String password = configuration.getDatabase().getPassword();
-        String url = String.format("jdbc:sqlserver://%s:1433;database=%s;user=%s;password=%s;encrypt=true;hostNameInCertifcate=*.database.windows.net;loginTimeout=30;", hostName, dbName, user, password);
+        String url = String.format("jdbc:sqlserver://%s:1433;"
+        		+ "database=%s;"
+        		+ "user=%s;"
+        		+ "password=%s;"
+        		+ "encrypt=true;"
+        		+ "trustServerCertificate=false;"
+        		+ "hostNameInCertifcate=*.database.windows.net;"
+        		+ "loginTimeout=30;", hostName, dbName, user, password);
+        
+//        String u = String.format("jdbc:sqlserver://hhfserver.database.windows.net:1433;"
+//        		+ "database=HHFdb;"
+//        		+ "user=Hausmeister@hhfserver;"
+//        		+ "password={your_password_here};"
+//        		+ "encrypt=true;"
+//        		+ "trustServerCertificate=false;"
+//        		+ "hostNameInCertificate=*.database.windows.net;"
+//        		+ "loginTimeout=30;", args)
+        
         Connection connection = null;
         
         try {

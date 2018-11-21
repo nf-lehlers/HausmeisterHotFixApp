@@ -1,22 +1,27 @@
 package itech.hotfix;
 
-import java.time.LocalTime;
+import java.time.LocalDateTime;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 /**
  * @author Luka 19.11.18
  */
+@JsonSerialize
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class Atmospherics {
 
-	private LocalTime timestamp;
+	private LocalDateTime timestamp;
 	private Number temperature;
 	private Number humidity;
 	private Number co2;
 	
 	
-	public LocalTime getTimestamp() {
+	public LocalDateTime getTimestamp() {
 		return timestamp;
 	}
-	public void setTimestamp(LocalTime timestamp) {
+	public void setTimestamp(LocalDateTime timestamp) {
 		this.timestamp = timestamp;
 	}
 	public Number getTemperature() {
