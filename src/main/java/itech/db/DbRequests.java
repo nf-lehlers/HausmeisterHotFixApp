@@ -12,6 +12,9 @@ import java.util.Properties;
 
 import org.skife.jdbi.v2.DBI;
 
+import com.google.common.util.concurrent.Service.State;
+
+import ch.qos.logback.core.pattern.util.RegularEscapeUtil;
 import io.dropwizard.db.DataSourceFactory;
 import itech.db.mapper.AtmosphericsMapper;
 import itech.hotfix.Atmospherics;
@@ -19,7 +22,8 @@ import itech.hotfix.Atmospherics;
 public class DbRequests {
 
 	private static DataSourceFactory dbf;
-	private final static String insertAtmospherics = "INSERT INTO Atmospherics (Timestamp, Temperature, Humidity, CO2) VALUES";
+	private final static String insertAtmospherics = "INSERT INTO Atmospherics (Timestamp, Temperature, Humidity, CO2) VALUES ";
+	private final static String selectAtmospherics = "SELECT * FROM Atmospherics ";
 	
 	public static void init(DataSourceFactory dsf) {
 		dbf = dsf;
@@ -75,6 +79,35 @@ public class DbRequests {
 	}
 	
 	/**
+	 * Führt eine Insert oder Update Query durch
+	 * @param s - Statement
+	 * @param query - Query String 
+	 * @return
+	 */
+	private static Integer insert(Statement s, String query) {
+		try {
+			return s.executeUpdate(query);
+		} catch(Exception ex) {
+			ex.printStackTrace();
+		}
+		return null;
+	}
+	
+	/**
+	 * Führt eine Select Query durch
+	 * @param s - Statement
+	 * @param query - Query String
+	 * @return
+	 */
+	private static ResultSet query(Statement s, String query) {
+		try {
+			return s.executeQuery(query);
+		} catch(Exception ex) {
+			ex.printStackTrace();
+		}
+		return null;
+	}
+	/**
 	 * Fügt einen Atmospherics Datensatz der DB hinzu
 	 * @param a
 	 */
@@ -84,11 +117,7 @@ public class DbRequests {
 		
 		Statement s = connect();
 		
-		try {
-			s.executeUpdate(query);
-		} catch(Exception ex) {
-			ex.printStackTrace();
-		}
+		insert(s, query);
 		
 		closeConnection(s);
 	}
@@ -108,11 +137,7 @@ public class DbRequests {
 		
 		Statement s = connect();
 		
-		try {
-			s.executeUpdate(query);
-		} catch(Exception ex) {
-			ex.printStackTrace();
-		}
+		insert(s, query);
 		
 		closeConnection(s);
 	}
@@ -122,36 +147,52 @@ public class DbRequests {
 	 * @return
 	 */
 	public static List<Atmospherics> loadAllAtmospherics() {
-		String query = "SELECT * FROM Atmospherics";
+		String query = selectAtmospherics;
 		
 		Statement s = connect();
-		ResultSet rs = null;
-		
-		try {
-			rs = s.executeQuery(query);
-		} catch(Exception ex) {
-			ex.printStackTrace();
-		}
-		
-		List<Atmospherics> al = new ArrayList<>();
-		
-		try {
-			if(rs.isBeforeFirst()) {
-				rs.next();
-			}
-			
-			while(!rs.isAfterLast()){
-				
-				al.add(AtmosphericsMapper.map(rs));
-				
-				rs.next();
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		ResultSet rs = query(s, query);
+
+		List<Atmospherics> al = AtmosphericsMapper.mapList(rs);
 		
 		closeConnection(s);
 		
+		return al;
+	}
+	
+	public static List<Atmospherics> loadAtmosphericsForToday() {
+		String query = selectAtmospherics + "WHERE DATE(Timestamp) = CURDATE()";
+		
+		Statement s = connect();
+		ResultSet rs = query(s, query);
+		
+		List<Atmospherics> al = AtmosphericsMapper.mapList(rs);
+		
+		closeConnection(s);
+		
+		return al;
+	}
+	
+	public static List<Atmospherics> loadAtmosphericsForYesterday() {
+		String query = selectAtmospherics + "WHERE DATE(Timestamp) = CURDATE() - 1";
+		
+		Statement s = connect();
+		ResultSet rs = query(s, query);
+		
+		List<Atmospherics> al = AtmosphericsMapper.mapList(rs);
+		
+		closeConnection(s);
+		return al;
+	}
+	
+	public static List<Atmospherics> loadAtmosphericsForLastMonth() {
+		String query  = selectAtmospherics + "WHERE MONTH(Timestamp) = MONTH(NOW()) AND YEAR(Timestamp) = YEAR(NOW())";
+		
+		Statement s = connect();
+		ResultSet rs = query(s, query);
+		
+		List<Atmospherics> al = AtmosphericsMapper.mapList(rs);
+		
+		closeConnection(s);
 		return al;
 	}
 }
