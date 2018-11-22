@@ -8,6 +8,9 @@ import itech.hotfix.Temp;
 
 import org.glassfish.jersey.client.JerseyClient;
 
+import java.sql.Timestamp;
+import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -32,7 +35,49 @@ public class HotFixResource extends JerseyClient {
     	
     	DbRequests.insertAtmospheric(a);
     	
-    	return null;
+    	return Response.ok().build();
+    }
+    
+    @GET
+    @Path("/getAllAtmospherics")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Atmospherics> getAtmosphericData() {
+    	return DbRequests.loadAllAtmospherics();
+    	
     }
 
+    @GET
+    @Path("/getAtmospherics/{date}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Atmospherics> getAtmosphericDataForDate(@PathParam("date") Timestamp date) {
+    	return null; // TODO
+    }
+    
+    @GET
+    @Path("/getAtmospherics/hour")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Atmospherics> getAtmosphericDataForLastHour() {
+    	return null; // TODO
+    }
+    
+    @GET
+    @Path("/getAtmospherics/today")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Atmospherics> getAtmosphericDataForToday() {
+    	return null; // TODO
+    }
+    
+    @GET
+    @Path("/getAtmospherics/week")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Atmospherics> getAtmosphericDataForLastWeek() {
+    	return null; // TODO
+    }
+    
+    @GET
+    @Path("/getAtmospherics/month")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Atmospherics> getAtmosphericsDataForLastMonth() {
+    	return null; // TODO
+    }
 }

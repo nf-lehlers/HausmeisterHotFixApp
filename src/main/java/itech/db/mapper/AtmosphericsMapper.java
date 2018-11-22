@@ -11,10 +11,10 @@ public class AtmosphericsMapper {
 		Atmospherics a = new Atmospherics();
 		
 		try {
-			a.setTimestamp(rs.getTimestamp("Timestamp").toLocalDateTime());
-			a.setTemperature(rs.getDouble("Temperature"));
-			a.setHumidity(rs.getDouble("Humidity"));
-			a.setCo2(rs.getDouble("CO2"));
+			a.setTimestamp(rs.getTimestamp("Timestamp"));
+			a.setTemperature(rs.getBigDecimal("Temperature"));
+			a.setHumidity(rs.getBigDecimal("Humidity"));
+			a.setCo2(rs.getBigDecimal("CO2"));
 		} catch(Exception ex) {
 			ex.printStackTrace();
 		}

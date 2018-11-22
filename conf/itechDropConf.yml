@@ -20,8 +20,8 @@ server:
     - type: http
       port: 18182
 consumableValue: ichKannVerwendetWerden
-metrics:
-  reporters:
-    - type: console
-      timeZone: UTC
-      output: stdout
+#metrics:
+#  reporters:
+#    - type: console
+#      timeZone: UTC
+#      output: stdout

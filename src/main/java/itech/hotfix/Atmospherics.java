@@ -1,6 +1,8 @@
 package itech.hotfix;
 
-import java.time.LocalDateTime;
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.sql.Timestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -10,36 +12,37 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
  */
 @JsonSerialize
 @JsonIgnoreProperties(ignoreUnknown=true)
-public class Atmospherics {
+public class Atmospherics implements Serializable {
 
-	private LocalDateTime timestamp;
-	private Number temperature;
-	private Number humidity;
-	private Number co2;
+	private static final long serialVersionUID = 1L;
+
+	private Timestamp timestamp;
+	private BigDecimal temperature;
+	private BigDecimal humidity;
+	private BigDecimal co2;
 	
-	
-	public LocalDateTime getTimestamp() {
+	public Timestamp getTimestamp() {
 		return timestamp;
 	}
-	public void setTimestamp(LocalDateTime timestamp) {
+	public void setTimestamp(Timestamp timestamp) {
 		this.timestamp = timestamp;
 	}
-	public Number getTemperature() {
+	public BigDecimal getTemperature() {
 		return temperature;
 	}
-	public void setTemperature(Number temperature) {
+	public void setTemperature(BigDecimal temperature) {
 		this.temperature = temperature;
 	}
-	public Number getHumidity() {
+	public BigDecimal getHumidity() {
 		return humidity;
 	}
-	public void setHumidity(Number humidity) {
+	public void setHumidity(BigDecimal humidity) {
 		this.humidity = humidity;
 	}
-	public Number getCo2() {
+	public BigDecimal getCo2() {
 		return co2;
 	}
-	public void setCo2(Number co2) {
+	public void setCo2(BigDecimal co2) {
 		this.co2 = co2;
 	}
 }
