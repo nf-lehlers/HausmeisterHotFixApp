@@ -38,6 +38,14 @@ public class HotFixResource extends JerseyClient {
     	return Response.ok().build();
     }
     
+    @POST
+    @Path("/insertAtmo")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response setAtmo(List<Atmospherics> al) {
+    	DbRequests.insertAtmospheric(al);
+    	return Response.ok().build();
+    }
+    
     @GET
     @Path("/getAllAtmospherics")
     @Produces(MediaType.APPLICATION_JSON)
@@ -64,14 +72,14 @@ public class HotFixResource extends JerseyClient {
     @Path("/getAtmospherics/today")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Atmospherics> getAtmosphericDataForToday() {
-    	return DbRequests.loadAtmosphericsForToday(); // TODO testen
+    	return DbRequests.loadAtmosphericsForToday();
     }
     
     @GET
     @Path("/getAtmospherics/yesterday")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Atmospherics> getAtmosphericsDataForYersterday() {
-    	return DbRequests.loadAtmosphericsForYesterday(); // TODO testen
+    	return DbRequests.loadAtmosphericsForYesterday();
     }
     
     @GET
@@ -85,6 +93,6 @@ public class HotFixResource extends JerseyClient {
     @Path("/getAtmospherics/month")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Atmospherics> getAtmosphericsDataForLastMonth() {
-    	return DbRequests.loadAtmosphericsForLastMonth(); // TODO testen
+    	return DbRequests.loadAtmosphericsForLastMonth();
     }
 }

@@ -38,7 +38,9 @@ public class AtmosphericsMapper {
 		List<Atmospherics> al = new ArrayList<>();
 		
 		try {
-			if(rs.isBeforeFirst()) {
+			if(!rs.isBeforeFirst()) {
+				return al;
+			} else {
 				rs.next();
 			}
 			

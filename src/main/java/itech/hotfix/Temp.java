@@ -1,27 +1,19 @@
 package itech.hotfix;
 
+import java.util.List;
+
+@Deprecated
 public class Temp {
 
-	private String temperature;
-	private String humidity;
-	private String co2;
+	private List<Atmospherics> test;
 
-	public String getTemperature() {
-		return temperature;
+	public List<Atmospherics> getTest() {
+		return test;
 	}
-	public void setTemperature(String temperature) {
-		this.temperature = temperature;
+
+	public void setTest(List<Atmospherics> test) {
+		this.test = test;
 	}
-	public String getHumidity() {
-		return humidity;
-	}
-	public void setHumidity(String humidity) {
-		this.humidity = humidity;
-	}
-	public String getCo2() {
-		return co2;
-	}
-	public void setCo2(String co2) {
-		this.co2 = co2;
-	}
+	
+	
 }
